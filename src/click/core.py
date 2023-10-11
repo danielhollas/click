@@ -2220,7 +2220,9 @@ class Parameter:
             source = ParameterSource.DEFAULT_MAP
 
         if value is None:
-            value = self.get_default(ctx)
+            # Do not evaluate callbacks when in tab-completion context
+            call = not ctx.resilient_parsing
+            value = self.get_default(ctx, call=call)
             source = ParameterSource.DEFAULT
 
         return value, source
