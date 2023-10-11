@@ -2224,7 +2224,9 @@ class Parameter:
             call = not ctx.resilient_parsing
             value = self.get_default(ctx, call=call)
             source = ParameterSource.DEFAULT
-
+            # TODO: Not sure if we should be returning a non-evaluated callback here?
+            if callable(value):
+                value = None
         return value, source
 
     def type_cast_value(self, ctx: Context, value: t.Any) -> t.Any:
